@@ -1,0 +1,30 @@
+<div id="review-body">
+  <div class="row-fluid">
+    <div class="span7">
+      <h1><%= @review.title %></h1>
+      <div class="well well-large"><%= @review.body %></div>
+    </div>
+
+    <div class="span5">
+      <div id="review-timestamp">
+        <%= long_formatted_date @review.created_at %>
+      </div>
+
+      <div id="review-user">
+        <%= image_tag @review.user.image_url, alt: @review.user.name %>
+        <p class="user-name"><%= link_to @review.user.name, user_path(@review.user) %></p>
+
+        <div class="well well-small">
+          <div>Полезен ли этот отзыв для вас?</div>
+          <a href="#" class="icon-thumbs-up"></a>
+          <span class="badge badge-success">2</span>
+
+          <a href="#" class="icon-thumbs-down"></a>
+          <span class="badge badge-important">2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Назад', reviews_path, class: 'btn' %>

@@ -1,0 +1,70 @@
+/* =========== GLOBAL BLOCKS ===========*/
+body {
+  word-wrap: break-word;
+}
+
+.navbar {
+  #user-block {
+    color: #fff;
+    .twitter {
+      margin-top: 3px;
+      margin-right: 7px;
+      width: 30px;
+      height: 30px;
+      outline: 0 none;
+    }
+    .avatar {
+      max-width: 30px;
+      max-height: 30px;
+      margin-top: 5px;
+      margin-right: 7px;
+    }
+
+    .avatar + div {
+      float: right;
+      color: #fff;
+      margin-top: 10px;
+      a {
+        text-decoration: underline;
+        color: #fff;
+        &:hover, &:active, &:focus {
+          color: darken(#fff, 15%);
+        }
+      }
+    }
+  }
+}
+footer {
+  margin-top: 15px;
+  padding-top: 15px;
+  margin-bottom: 5px;
+  border-top: 1px solid #ccc;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.big-teaser {
+  text-align: center;
+  font-size: 25px;
+  padding:10px;
+  margin: 20px 0;
+}
+
+/* ============ TYPOGRAPHY ============ */
+
+/* ========= FORMS =========== */
+
+.buttons-group {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#error_explanation {
+  border: 1px solid red;
+  background-color: lighten(red, 30%);
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/* ============================ */

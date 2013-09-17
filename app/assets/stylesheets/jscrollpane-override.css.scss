@@ -1,0 +1,14 @@
+.jspVerticalBar {
+  .jspTrack {
+    background-color: #fff;
+    border-right: 1px dashed #000;
+    border-left: 1px dashed #000;
+  }
+
+  .jspDrag {
+    background-color: #e0e0e0;
+    &:hover, &:active {
+      background-color: #bbbbbb;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div id="user-profile">
+  <h1>
+    <%= @user.name %> (aka <%= @user.nickname %>)
+    <%= current_user && @user == current_user ?
+                "<small>(это вы)</small>".html_safe : ""%>
+  </h1>
+
+  <div class="row-fluid">
+    <div class="span2">
+      <div id="user-avatar">
+        <%= image_tag @user.image_url, alt: @user.name %>
+      </div>
+    </div>
+
+    <div class="span5">
+      <ul>
+        <li><b>Дата регистрации:</b> <%= long_formatted_date @user.created_at %>
+          (стаж <%= member_for @user %>)</li>
+        <li><b>Социальная сеть:</b>  <%= @user.provider.titleize %></li>
+        <li><b>Профиль в социальной сети:</b>  <%= link_to @user.profile_url, @user.profile_url,
+                                                   target: '_blank' %></li>
+        <li><b>Написанных отзывов и предложений:</b>  <%= @user.reviews.count %></li>
+      </ul>
+    </div>
+
+    <div class="last_reviews span5">
+      <h3>Последние отзывы и предложения</h3>
+
+      <div id="review_list" class="make-jscrollpane">
+        <% @user.reviews.limit(10).each do |review| %>
+            <div class="review">
+              <div class="timestamp"><%= long_formatted_date review.created_at %></div>
+              <%= link_to review.title, review_path(review), class: 'title' %>
+              <div class="body"><%= review.body %></div>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

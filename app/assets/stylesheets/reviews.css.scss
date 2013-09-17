@@ -1,0 +1,25 @@
+#review-body {
+  margin-bottom: 10px;
+  #review-timestamp {
+    margin-top: 20px;
+    color: #ccc;
+    font-size: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  #review-user {
+    text-align: center;
+    img {
+      border: 7px solid #ccc;
+      @include border-radius(7px);
+      max-height: 100px;
+    }
+
+    .user-name {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+}

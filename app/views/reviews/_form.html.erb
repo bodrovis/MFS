@@ -1,0 +1,13 @@
+<%= form_for @review do |f| %>
+    <%= render partial: 'shared/errors', locals: {obj: @review} %>
+
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: '6' %>
+
+    <div class="actions">
+      <%= f.submit 'Отправить', class: 'btn btn-primary' %>
+    </div>
+<% end %>
