@@ -3,6 +3,7 @@ Mfs::Application.routes.draw do
   root to: 'reviews#index'
 
   resources :users, only: [:show]
+  get '/votes/add/:review', to: 'votes#add', as: 'add_vote'
 
   match '/auth/:provider/callback', to: 'sessions#create'
   match '/auth/failure', to: redirect('/')

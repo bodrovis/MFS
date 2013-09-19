@@ -16,11 +16,23 @@
 
         <div class="well well-small">
           <div>Полезен ли этот отзыв для вас?</div>
-          <a href="#" class="icon-thumbs-up"></a>
-          <span class="badge badge-success">2</span>
+          <div>
+            <span class="badge badge-success"><%= @review.votes_for_review('up') %></span>
+            <span class="badge badge-important"><%= @review.votes_for_review('down') %></span>
+          </div>
 
-          <a href="#" class="icon-thumbs-down"></a>
-          <span class="badge badge-important">2</span>
+          <div>
+            <% if current_user %>
+                <% if current_user.voted_for?(@review) %>
+                    <small>Вы уже голосовали!</small>
+                <% else %>
+                    <%= link_to '', add_vote_path(@review) + '?type=up', class: 'icon-thumbs-up' %>
+                    <%= link_to '', add_vote_path(@review) + '?type=down', class: 'icon-thumbs-down' %>
+                <% end %>
+            <% else %>
+                <small>Войдите через <%= link_to 'Twitter', '/auth/twitter' %>, чтобы голосовать.</small>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

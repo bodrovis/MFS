@@ -15,9 +15,10 @@
 <table class="table table-striped table-hover">
   <tr>
     <th width="20%">Название</th>
-    <th width="55%">Текст</th>
+    <th width="50%">Текст</th>
     <th width="10%">Дата добавления</th>
     <th width="10%">Автор</th>
+    <th width="5%">Рейтинг</th>
     <th width="5%"></th>
   </tr>
 
@@ -27,6 +28,7 @@
         <td><%= truncate review.body, length: 200 %></td>
         <td><%= long_formatted_date review.created_at %></td>
         <td><%= link_to review.user.name, user_path(review.user) %></td>
+        <td><%= review.summary_rating %></td>
         <td><%= link_to 'Прочитать', review %></td>
       </tr>
   <% end %>
