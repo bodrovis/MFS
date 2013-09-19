@@ -58,8 +58,14 @@ class ReviewsController < ApplicationController
   # DELETE /reviews/1
   # DELETE /reviews/1.json
   def destroy
+    authorize! :destroy, ReviewsController
     @review = Review.find(params[:id])
-    @review.destroy
+    if @review
+      @review.destroy
+      flash[:success] = 'Запись была успешно удалена!'
+    else
+      flash[:error] = 'Запись не найдена.'
+    end
 
     respond_to do |format|
       format.html { redirect_to reviews_url }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130919134645) do
+ActiveRecord::Schema.define(:version => 20130919170330) do
 
   create_table "reviews", :force => true do |t|
     t.string   "title"
@@ -40,16 +40,17 @@ ActiveRecord::Schema.define(:version => 20130919134645) do
     t.string   "secret"
     t.string   "profile_url"
     t.string   "image_url"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.string   "role",        :default => "user"
   end
 
   create_table "votes", :force => true do |t|
-    t.string   "type"
     t.integer  "review_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "vote_type"
   end
 
 end

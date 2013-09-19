@@ -18,8 +18,8 @@
 class User < ActiveRecord::Base
   attr_accessible :image_url, :name, :nickname, :profile_url, :provider, :secret, :token, :uid
 
-  has_many :reviews
-  has_many :votes
+  has_many :reviews, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   def voted_for?(review)
     self.votes.where(review_id: review.id).any?

@@ -14,7 +14,7 @@ class Review < ActiveRecord::Base
   attr_accessible :body, :title
 
   belongs_to :user
-  has_many :votes
+  has_many :votes, dependent: :destroy
 
   default_scope order: 'created_at DESC'
 
@@ -22,12 +22,12 @@ class Review < ActiveRecord::Base
   validates :body, presence: true, length: {minimum: 10, maximum: 2000}
 
   def summary_rating
-    self.votes.where(type: 'up').count - self.votes.where(type: 'down').count
+    self.votes.where(vote_type: 'up').count - self.votes.where(vote_type: 'down').count
   end
 
-  def votes_for_review(type)
-    if %w(up down).include?(type)
-      self.votes.where(type: type).count
+  def votes_for_review(vote_type)
+    if %w(up down).include?(vote_type)
+      self.votes.where(vote_type: vote_type).count
     else
       0
     end

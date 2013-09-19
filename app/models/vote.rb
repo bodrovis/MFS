@@ -11,7 +11,7 @@
 #
 
 class Vote < ActiveRecord::Base
-  attr_accessible :type, :user_id
+  attr_accessible :vote_type, :user_id
 
   belongs_to :review
   belongs_to :user

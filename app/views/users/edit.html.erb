@@ -1,0 +1,15 @@
+<% if @user %>
+    <h1>Редактировать пользователя <%= @user.name %></h1>
+    <%= form_for @user do |f| %>
+        <%= render partial: 'shared/errors', locals: {obj: @user} %>
+
+        <label>Права доступа</label>
+        <%= select_tag 'user[role]',
+                       "<option #{'selected=\'selected\'' if @user.role == 'user'}>user</option><option #{'selected=\'selected\'' if @user.role == 'admin'}>admin</option>".html_safe %>
+        <div class="actions">
+          <%= f.submit 'Отправить', class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+<% else %>
+    <p>Пользователь не найден.</p>
+<% end %>

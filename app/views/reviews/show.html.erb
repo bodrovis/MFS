@@ -26,8 +26,8 @@
                 <% if current_user.voted_for?(@review) %>
                     <small>Вы уже голосовали!</small>
                 <% else %>
-                    <%= link_to '', add_vote_path(@review) + '?type=up', class: 'icon-thumbs-up' %>
-                    <%= link_to '', add_vote_path(@review) + '?type=down', class: 'icon-thumbs-down' %>
+                    <%= link_to '', add_vote_path(@review) + '?vote_type=up', class: 'icon-thumbs-up' %>
+                    <%= link_to '', add_vote_path(@review) + '?vote_type=down', class: 'icon-thumbs-down' %>
                 <% end %>
             <% else %>
                 <small>Войдите через <%= link_to 'Twitter', '/auth/twitter' %>, чтобы голосовать.</small>
@@ -40,3 +40,7 @@
 </div>
 
 <%= link_to 'Назад', reviews_path, class: 'btn' %>
+<% if current_user && current_user.role == 'admin' %>
+    <%= link_to 'Удалить', review_path(@review), method: :delete, confirm: 'Вы уверены?',
+                class: 'btn btn-danger' %>
+<% end %>

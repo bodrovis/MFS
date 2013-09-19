@@ -2,7 +2,7 @@ Mfs::Application.routes.draw do
   resources :reviews, except: [:edit, :update]
   root to: 'reviews#index'
 
-  resources :users, only: [:show]
+  resources :users, only: [:show, :index, :destroy, :edit, :update]
   get '/votes/add/:review', to: 'votes#add', as: 'add_vote'
 
   match '/auth/:provider/callback', to: 'sessions#create'
