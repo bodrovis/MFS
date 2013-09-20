@@ -1,64 +1,67 @@
 <div id="user-profile">
-  <h1>
-    <%= @user.name %> (aka <%= @user.nickname %>)
-    <%= current_user && @user == current_user ?
-                "<small>(это вы)</small>".html_safe : ""%>
-  </h1>
+  <% cache @user do %>
+      <h1>
+        <%= @user.name %> (aka <%= @user.nickname %>)
+        <%= current_user && @user == current_user ?
+                    "<small>(это вы)</small>".html_safe : ""%>
+      </h1>
 
-  <div class="row-fluid">
-    <div class="span2">
-      <div id="user-avatar">
-        <%= image_tag @user.image_url, alt: @user.name %>
-      </div>
-    </div>
-
-    <div class="span5">
-      <ul class="full-info">
-        <li><b>Дата регистрации:</b> <%= long_formatted_date @user.created_at %>
-          (стаж <%= member_for @user %>)</li>
-        <li><b>Социальная сеть:</b>  <%= @user.provider.titleize %></li>
-        <li><b>Профиль в социальной сети:</b>  <%= link_to @user.profile_url, @user.profile_url,
-                                                           target: '_blank' %></li>
-        <li><b>Написанных отзывов и предложений:</b>  <%= @user.reviews.count %></li>
-      </ul>
-    </div>
-
-    <div class="span5">
-      <ul id="user-nav-tabs" class="nav nav-tabs">
-        <li><a href="#last_reviews" data-toggle="tab">Последние отзывы</a></li>
-        <li><a href="#last_votes" data-toggle="tab">Последние голоса</a></li>
-      </ul>
-
-      <div class="tab-content">
-        <div id="last_reviews" class="last_reviews tab-pane fade active in">
-          <h3>Последние отзывы и предложения</h3>
-
-          <div id="review_list" class="make-jscrollpane">
-            <% @user.reviews.limit(10).each do |review| %>
-                <div class="review">
-                  <div class="timestamp"><%= long_formatted_date review.created_at %></div>
-                  <%= link_to review.title, review_path(review), class: 'title' %>
-                  <div class="body"><%= review.body %></div>
-                </div>
-            <% end %>
+      <div class="row-fluid">
+        <div class="span2">
+          <div id="user-avatar">
+            <%= image_tag @user.image_url, alt: @user.name %>
           </div>
         </div>
 
-        <div id="last_votes" class="last_votes tab-pane fade in">
-          <h3>Последние отданные голоса</h3>
+        <div class="span5">
+          <ul class="full-info">
+            <li><b>Дата регистрации:</b> <%= long_formatted_date @user.created_at %>
+              (стаж <%= member_for @user %>)</li>
+            <li><b>Социальная сеть:</b>  <%= @user.provider.titleize %></li>
+            <li><b>Профиль в социальной сети:</b>  <%= link_to @user.profile_url, @user.profile_url,
+                                                               target: '_blank' %></li>
+            <li><b>Написанных отзывов и предложений:</b>  <%= @user.reviews_count %></li>
+          </ul>
+        </div>
+  <% end %>
 
-          <div id="votes_list" class="make-jscrollpane">
-            <% @user.votes.limit(20).each do |vote| %>
-                <div class="vote">
-                  <span class="icon-thumbs-<%= vote.vote_type.to_s.downcase %>"></span> отзыву
-                  <%= link_to vote.review.title, review_path(vote.review) %>
-                  (<%= long_formatted_date vote.created_at %>)
-                </div>
-            <% end %>
-          </div>
+  <div class="span5">
+    <ul id="user-nav-tabs" class="nav nav-tabs">
+      <li><a href="#last_reviews" data-toggle="tab">Последние отзывы</a></li>
+      <li><a href="#last_votes" data-toggle="tab">Последние голоса</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="last_reviews" class="last_reviews tab-pane fade active in">
+        <h3>Последние отзывы и предложения</h3>
+
+        <div id="review_list" class="make-jscrollpane">
+          <% @user.last_reviews.each do |review| %>
+              <div class="review">
+                <div class="timestamp"><%= long_formatted_date review.created_at %></div>
+                <%= link_to review.title, review_path(review), class: 'title' %>
+                <div class="body"><%= review.body %></div>
+              </div>
+          <% end %>
         </div>
       </div>
+
+      <div id="last_votes" class="last_votes tab-pane fade in">
+        <h3>Последние отданные голоса</h3>
+        <% cache 'last_votes_' + @user.id.to_s do %>
+            <div id="votes_list" class="make-jscrollpane">
+              <% @user.votes.includes(:review).limit(20).each do |vote| %>
+                  <div class="vote">
+                    <span class="icon-thumbs-<%= vote.vote_type.to_s.downcase %>"></span> отзыву
+                    <%= link_to vote.review.title, review_path(vote.review) %>
+                    (<%= long_formatted_date vote.created_at %>)
+                  </div>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
     </div>
+  </div>
   </div>
 
   <% if current_user && current_user.role == 'admin' && current_user != @user %>

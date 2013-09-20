@@ -1,4 +1,5 @@
 Mfs::Application.routes.draw do
+  get '/reviews/page/:page', to: 'reviews#page'
   resources :reviews, except: [:edit, :update]
   root to: 'reviews#index'
 

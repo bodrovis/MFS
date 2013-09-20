@@ -4,6 +4,7 @@ class VotesController < ApplicationController
     %w(up down).include?(params[:vote_type]) ? vote_type = params[:vote_type] : vote_type = nil
     if vote_type && @review && current_user && !current_user.voted_for?(@review)
       @review.votes.create(vote_type: vote_type, user_id: current_user.id)
+      expire_fragment('last_votes_' + current_user.id.to_s)
     end
     redirect_to review_path(@review)
   end

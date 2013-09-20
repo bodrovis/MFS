@@ -28,7 +28,7 @@
         <td><%= truncate review.body, length: 200 %></td>
         <td><%= long_formatted_date review.created_at %></td>
         <td><%= link_to review.user.name, user_path(review.user) %></td>
-        <td><%= review.summary_rating %></td>
+        <td><%= sprintf("%.2f", review.summary_rating) %></td>
         <td><%= link_to 'Прочитать', review %></td>
       </tr>
   <% end %>

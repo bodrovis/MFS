@@ -16,4 +16,5 @@
 //= require jquery.jscrollpane
 //= require jquery.mousewheel
 //= require jquery.mwheelintent
+//= require jquery.validate.min
 //= require misc

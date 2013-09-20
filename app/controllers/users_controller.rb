@@ -1,6 +1,8 @@
 #encoding: utf-8
 class UsersController < ApplicationController
   def show
+    Review
+    Vote
     @user = User.find_by_id(params[:id])
   end
 

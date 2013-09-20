@@ -16,12 +16,26 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :image_url, :name, :nickname, :profile_url, :provider, :secret, :token, :uid
+  # attr_accessible :image_url, :name, :nickname, :profile_url, :provider, :secret, :token, :uid
 
   has_many :reviews, dependent: :destroy
   has_many :votes, dependent: :destroy
 
   def voted_for?(review)
-    self.votes.where(review_id: review.id).any?
+    Rails.cache.fetch('user-' + self.id.to_s + '-voted-for-' + review.id.to_s) {
+      self.votes.where(review_id: review.id).any?
+    }
+  end
+
+  def reviews_count
+    Rails.cache.fetch('reviews-count-for-user-' + self.id.to_s) {
+      self.reviews.count
+    }
+  end
+
+  def last_reviews
+    Rails.cache.fetch('last-reviews-for-user-' + self.id.to_s) {
+      self.reviews.limit(10).to_a
+    }
   end
 end
